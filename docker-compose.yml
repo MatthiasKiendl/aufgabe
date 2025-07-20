@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  php:
+    build: ./backend
+    ports:
+      - "8001:80"
+
+  python:
+    build: ./falcon_fw
+    ports:
+      - "8000:8000"
+    depends_on:
+      - php
