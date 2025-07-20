@@ -6,9 +6,29 @@ function format_time($timestamp): string {
     $hour = date('g', $timestamp);
     $minute = date('i', $timestamp);
     $am_or_pm = date('a', $timestamp);
-    # TODO:
-    # Logik -> if ... 
-    #
+
+    if ($minute === 0) {
+        return "$hour o'clock";
+    } elseif ($minute === 15) {
+        return "quarter past $hour";
+    } elseif ($minute === 30) {
+        return "half past $hour";
+    } elseif ($minute === 45) {
+        following_hour = ($hour % 12) + 1;
+        return "quarter to $following_hour";
+    } elseif ($minute < 30) {
+        if ($minute === 1) {
+            return "one minute past $hour";
+        }
+        $str_minute = "$minute"
+        return "$str_minute past $hour";
+    } else {
+        $minutes_diff = 60 - $minute;
+        $following_hour = ($hour % 12) + 1;
+        $str_minute = $minutes_diff === 1 ? "one minute" : "$minutes_diff";
+        return "$minutes_diff to $following_hour";
+    }
+
     return "$hour $minute $am_or_pm";
 }
 
