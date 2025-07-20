@@ -23,6 +23,17 @@ else if ($action === 'howareyou') {
     echo json_encode(["message" => "I'm fine"]);
 }
 else if ($action === 'whattimeisit') {
+    $time_zone = $_GET['timezone'] ?? '';
+    if (!time_zone) {
+        echo json_encode(["Error" => "Timezone parameter is missing!"]);
+        exit;
+    }
+    $allTimezones = DateTimeZone::listIdentifiers();                            #List of all Timezones, Format ex.: Europe/Berlin
+    if (!in_array($time_zone, $allTimezones)) {
+        echo json_encode(["Error" => "Not a Timezone!"]);
+        exit;
+    }
+    date_default_timezone_set($time_zone);
     $time = format_time(time());
     echo json_encode(["message" => "It's $time"]);
 }
