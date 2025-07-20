@@ -8,25 +8,25 @@ function format_time($timestamp): string {
     $am_or_pm = date('a', $timestamp);
 
     if ($minute === 0) {
-        return "$hour o'clock";
+        return "$hour o'clock $ampm";
     } elseif ($minute === 15) {
-        return "quarter past $hour";
+        return "quarter past $hour $ampm";
     } elseif ($minute === 30) {
-        return "half past $hour";
+        return "half past $hour $ampm";
     } elseif ($minute === 45) {
-        following_hour = ($hour % 12) + 1;
-        return "quarter to $following_hour";
+        $following_hour = ($hour % 12) + 1;
+        return "quarter to $following_hour $ampm";
     } elseif ($minute < 30) {
         if ($minute === 1) {
-            return "one minute past $hour";
+            return "one minute past $hour $ampm";
         }
-        $str_minute = "$minute"
-        return "$str_minute past $hour";
+        $str_minute = "$minute";
+        return "$str_minute past $hour $ampm";
     } else {
         $minutes_diff = 60 - $minute;
         $following_hour = ($hour % 12) + 1;
         $str_minute = $minutes_diff === 1 ? "one minute" : "$minutes_diff";
-        return "$minutes_diff to $following_hour";
+        return "$minutes_diff to $following_hour $ampm";
     }
 
     return "$hour $minute $am_or_pm";
