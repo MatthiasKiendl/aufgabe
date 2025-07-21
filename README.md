@@ -13,6 +13,7 @@ bewerbungsaufgabe/
 │   ├── index.html          # Frontend-Demo
 │   ├── req.txt             # Python-Abhängigkeiten
 │   ├── wsgi.py             # WSGI Entry Point
+│   ├── auth.py             # HTTP Basic Auth
 │   └── Dockerfile          # Python-Image mit Waitress
 ├── docker-compose.yml      # Multi-Container-Setup
 └── README.md               # Diese Anleitung
