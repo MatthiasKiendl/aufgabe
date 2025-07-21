@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This phpunit.xml configuration file sets up PHPUnit for the backend project.
+    - Enables colored output for test results.
+    - Defines a test suite named "Backend Test Suite" that includes all tests located in the ./tests directory.
+    - Ensures tests are organized and executed according to the specified suite.
+-->
+<phpunit colors="true">
+  <testsuites>
+    <testsuite name="Backend Test Suite">
+      <directory>./tests</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

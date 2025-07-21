@@ -1,7 +1,40 @@
+"""
+controller.py
+This module implements a Falcon-based web API that interacts with a PHP backend and provides endpoints for time-related queries based on city names or IP geolocation.
+Functions:
+----------
+- city_to_timezone(city_name: str) -> str | None:
+    Converts a city name to its corresponding timezone using geopy and timezonefinder.
+    Returns the timezone string or None if the city is not found.
+- find_timezone_by_ip() -> str | None:
+    Determines the timezone based on the client's IP address using ipapi.co and timezonefinder.
+    Returns the timezone string or None if the location cannot be determined.
+Classes:
+--------
+- Hello:
+    GET endpoint that proxies a "hello" request to the PHP backend.
+- HowAreYou:
+    GET endpoint that proxies a "howareyou" request to the PHP backend.
+- WhatTimeIsIt:
+    GET endpoint that determines the user's timezone by IP and requests the current time from the PHP backend.
+    Returns an error if the timezone cannot be determined.
+- InByCity:
+    GET endpoint that accepts a city name as a URL parameter, determines its timezone, and requests the current time from the PHP backend.
+    Returns an error if the city is not found.
+- InByCityPost:
+    POST endpoint that accepts a city name in JSON, determines its timezone, and requests the current time from the PHP backend.
+    Returns an error if the city is not found or if the request is malformed.
+- IndexRedirect:
+    GET endpoint that redirects requests to '/index.html'.
+App Setup:
+----------
+- Registers static route for frontend assets.
+- Adds all defined routes to the Falcon app.
+"""
 import falcon
 import requests
-from geopy.geocoders import Nominatim                               #city -> coordinates
-from timezonefinder import TimezoneFinder                           #coordinates -> timezone
+from geopy.geocoders import Nominatim
+from timezonefinder import TimezoneFinder
 import os
 
 standard_url = "http://php/index.php?action="

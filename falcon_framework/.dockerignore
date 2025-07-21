@@ -1,1 +1,7 @@
+# This .dockerignore file excludes Python cache directories, .gitignore files, and log files from the Docker build context.
+# - __pycache__/ : Prevents Python bytecode cache from being added to the image.
+# - .gitignore   : Excludes the .gitignore file itself.
+# - *.log        : Omits all log files from the build context.
 __pycache__/
+.gitignore
+*.log

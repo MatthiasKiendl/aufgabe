@@ -1,3 +1,16 @@
+# This docker-compose.yml file defines two services: php and python.
+#
+# Services:
+# 1. php:
+#    - Builds the PHP service from the ./backend directory.
+#    - Exposes port 80 of the container on port 8001 of the host.
+#
+# 2. python:
+#    - Builds the Python service from the ./falcon_framework directory.
+#    - Runs the application using waitress-serve on port 8000, serving the WSGI app.
+#    - Exposes port 8000 of the container on port 8000 of the host.
+#    - Depends on the php service, ensuring it starts after php.
+
 version: "3.9"
 services:
   php:

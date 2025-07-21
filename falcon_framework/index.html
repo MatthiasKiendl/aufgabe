@@ -1,3 +1,22 @@
+<!--
+    This HTML file provides a simple frontend demo for interacting with several backend endpoints related to time and timezone queries.
+
+    Features:
+    - Lists available endpoints:
+        - /hello: Basic endpoint (GET)
+        - /howareyou: Basic endpoint (GET)
+        - /whattimeisit: Returns current time (GET)
+    - "Zeitzone abfragen (GET)": Allows users to enter a city and redirects to /in/{city} via GET request.
+    - "Zeitzone abfragen (POST)": Allows users to enter a city and sends a POST request to /in with the city in JSON format.
+        - Displays the result or error message in a styled alert box.
+    - Uses Bootstrap 5 for styling.
+    - Includes client-side JavaScript for form handling and AJAX requests.
+
+    Usage:
+    - Enter a city name in either form to query timezone information.
+    - The GET form redirects the browser to the corresponding endpoint.
+    - The POST form sends an AJAX request and displays the result on the page.
+-->
 <!DOCTYPE html>
 <html lang="de">
 <head>
