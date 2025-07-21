@@ -7,7 +7,7 @@ services:
       - "8001:80"
 
   python:
-    build: ./falcon_fw
+    build: ./falcon_framework
     command: ["waitress-serve", "--port=8000", "wsgi:app"]
     ports:
       - "8000:8000"
