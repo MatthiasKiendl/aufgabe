@@ -3,7 +3,8 @@ import requests
 from geopy.geocoders import Nominatim                               #city -> coordinates
 from timezonefinder import TimezoneFinder                           #coordinates -> timezone
 
-# TODO: Logik Zeitzonen herausfinden
+standard_url = "http://php/index.php?action="
+
 def find_timezone_ip() -> str | None:
     try:
         info = requests.get("https://ipapi.co/json/").json()
@@ -24,7 +25,6 @@ def find_timezone_city(cityname: str) -> str | None:
         return TimezoneFinder().timezone_at(lng=l_grad, lat=b_grad)
 
 
-standard_url = "http://php/index.php?action="
 
 class Hello:
     def on_get(self, req, resp):
@@ -43,11 +43,26 @@ class WhatTimeIsIt:
         php_response = requests.get(standard_url + "whattimeisit", params={"timezone": time_zone})
         resp.media = php_response.json()
 
-# Get und Post mit /in --- Eingabe möglich 
 class InByCityGet:
     def on_get(self, req, resp, city):
-        resp.media = {"n/a": "TODO"}
+        time_zone = find_timezone_city(city)
+        if time_zone is None:
+            resp.media = {"Error": "City not found."}
+        else:
+            response = requests.get(standard_url + "in", params={"timezone": time_zone})
+            resp.media = response.json()
 
 class InByCityPost:
     def on_get(self, req, resp):
-        resp.media = {"n/a": "TODO"}
+        data = req.media
+        city = data.get("city", "").strip()
+
+        if not city:
+            resp.media = {"Error": "The name of the city has to be in JSON e.g. {'city': 'London'}"}
+            return
+        time_zone = find_timezone_city(city)
+        if time_zone is None:
+            resp.media = {"Error": "City not found."}
+        else:
+                response = requests.get(standard_url + "in", params={"timezone": time_zone})
+                resp.media = response.json()            
