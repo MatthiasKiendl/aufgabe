@@ -2,6 +2,7 @@ import falcon
 import requests
 from geopy.geocoders import Nominatim                               #city -> coordinates
 from timezonefinder import TimezoneFinder                           #coordinates -> timezone
+import os
 
 standard_url = "http://php/index.php?action="
 
@@ -66,3 +67,22 @@ class InByCityPost:
         else:
                 response = requests.get(standard_url + "in", params={"timezone": time_zone})
                 resp.media = response.json()            
+
+
+# Routing, via waitress wsgi
+class IndexRedirect:
+    def on_get(self, req, resp):
+        resp.set_header('Location', '/index.html')
+
+app = falcon.App()
+
+
+frontend_path = os.path.dirname(os.path.abspath(__file__))
+app.add_static_route("/", frontend_path)
+
+app.add_route("/", IndexRedirect())
+app.add_route("/hello", Hello())
+app.add_route("/howareyou", HowAreYou())
+app.add_route("/whattimeisit", WhatTimeIsIt())
+app.add_route("/in/{city}", InByCityGet())
+app.add_route("/in", InByCityPost())
