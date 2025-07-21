@@ -16,6 +16,7 @@ bewerbungsaufgabe/
 │   ├── auth.py             # HTTP Basic Auth
 │   └── Dockerfile          # Python-Image mit Waitress
 ├── docker-compose.yml      # Multi-Container-Setup
+├── .env                    # Auth Login Information
 └── README.md               # Diese Anleitung
 ```
 

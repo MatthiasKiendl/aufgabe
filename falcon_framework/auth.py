@@ -2,7 +2,7 @@ import base64
 import falcon
 import os
 
-class BasicAuthMiddleware:
+class HTTPBasicAuth:
     def process_request(self, req, resp):
         auth = req.get_header("Authorization")
 

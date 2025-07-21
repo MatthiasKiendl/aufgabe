@@ -4,4 +4,6 @@ composer.lock
 .phpunit.result.cache
 __pycache__/
 *.pyc
-.env
+
+# normally ignored files, but included now for context
+# .env

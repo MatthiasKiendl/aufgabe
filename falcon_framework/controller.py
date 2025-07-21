@@ -36,7 +36,7 @@ import requests
 from geopy.geocoders import Nominatim
 from timezonefinder import TimezoneFinder
 import os
-from auth import BasicAuthMiddleware
+from auth import HTTPBasicAuth
 
 standard_url = "http://php/index.php?action="
 
@@ -123,7 +123,7 @@ class IndexRedirect:
         resp.status = falcon.HTTP_302
         resp.set_header('Location', '/index.html')
 
-app = falcon.App(middleware=[BasicAuthMiddleware()])
+app = falcon.App(middleware=[HTTPBasicAuth()])
 
 frontend_path = os.path.dirname(os.path.abspath(__file__))
 
