@@ -1,8 +1,19 @@
 import falcon
 import requests
-
+from geopy.geocoders import Nominatim
+from timezonefinder import TimezoneFinder
 
 # TODO: Logik Zeitzonen herausfinden
+def find_timezone_ip() -> str | None:
+    try:
+        info = requests.get("https://ipapi.co/json/").json()
+        b_grad = info.get("latitude")
+        l_grad = info.get("longitude")
+        if b_grad and l_grad:
+            finder = TimezoneFinder()
+            return finder.timezone_at(lat=b_grad, lng=l_grad)
+    except Exception:
+        return None
 
 standard_url = "http://php/index.php?action="
 
