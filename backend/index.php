@@ -1,11 +1,8 @@
 <?php
-header('Content-Type: application/json');
-
-
 function format_time($timestamp): string {
-    $hour = date('g', $timestamp);
-    $minute = date('i', $timestamp);
-    $am_or_pm = date('a', $timestamp);
+    $hour = (int)date('g', $timestamp); 
+    $minute = (int)date('i', $timestamp); 
+    $ampm = date('a', $timestamp);
 
     if ($minute === 0) {
         return "$hour o'clock $ampm";
@@ -14,51 +11,62 @@ function format_time($timestamp): string {
     } elseif ($minute === 30) {
         return "half past $hour $ampm";
     } elseif ($minute === 45) {
-        $following_hour = ($hour % 12) + 1;
-        return "quarter to $following_hour $ampm";
+        $nextHour = ($hour % 12) + 1;
+        return "quarter to $nextHour $ampm";
     } elseif ($minute < 30) {
-        if ($minute === 1) {
-            return "one minute past $hour $ampm";
-        }
-        $str_minute = "$minute";
-        return "$str_minute past $hour $ampm";
+        $minuteStr = $minute === 1 ? "one minute" : "$minute";
+        return "$minuteStr past $hour $ampm";
     } else {
-        $minutes_diff = 60 - $minute;
-        $following_hour = ($hour % 12) + 1;
-        $str_minute = $minutes_diff === 1 ? "one minute" : "$minutes_diff";
-        return "$minutes_diff to $following_hour $ampm";
+        $minutesTo = 60 - $minute;
+        $nextHour = ($hour % 12) + 1;
+        $minuteStr = $minutesTo === 1 ? "one minute" : "$minutesTo";
+        return "$minuteStr to $nextHour $ampm";
     }
-
-    return "$hour $minute $am_or_pm";
 }
 
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
 
-# Endpunkte /hello {message:'hello'} /howareyou {message: 'I'm fine'}
-
-if ($action === 'hello') {
-    echo json_encode(["message" => "hello"]);
-}
-else if ($action === 'howareyou') {
+if ($action === 'howareyou') {
     echo json_encode(["message" => "I'm fine"]);
 }
+
+else if ($action === 'hello') {
+    echo json_encode(["message" => "hello"]);
+}
+
 else if ($action === 'whattimeisit') {
-    $time_zone = $_GET['timezone'] ?? '';
-    if (!time_zone) {
-        echo json_encode(["Error" => "Timezone parameter is missing!"]);
+    $tz = $_GET['timezone'] ?? '';
+
+    if (!$tz || !in_array($tz, DateTimeZone::listIdentifiers())) {
+        echo json_encode(["error" => "unknown timezone"]);
         exit;
     }
-    $allTimezones = DateTimeZone::listIdentifiers();                            #List of all Timezones, Format ex.: Europe/Berlin
-    if (!in_array($time_zone, $allTimezones)) {
-        echo json_encode(["Error" => "Not a Timezone!"]);
-        exit;
-    }
-    date_default_timezone_set($time_zone);
+
+    date_default_timezone_set($tz);
     $time = format_time(time());
-    echo json_encode(["message" => "It's $time"]);
+    echo json_encode([
+        "message" => "It's $time"
+    ]);
 }
-# /in/.. Filler atm
+
 else if ($action === 'in') {
-    $time = format_time(time());
-    echo json_encode(["message" => "It's $time"]);
+    $tz = $_GET['timezone'] ?? '';
+
+    if (!$tz) {
+        echo json_encode(["error" => "missing timezone"]);
+        exit;
+    }
+
+    if (in_array($tz, DateTimeZone::listIdentifiers())) {
+        date_default_timezone_set($tz);
+        $time = format_time(time());
+        echo json_encode(["message" => "It's $time"]);
+    } else {
+        echo json_encode(["error" => "unknown timezone"]);
+    }
 }
+
+else {
+    echo json_encode(["error" => "No valid action"]);
+}
+?>

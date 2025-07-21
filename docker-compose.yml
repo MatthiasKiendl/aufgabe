@@ -1,5 +1,4 @@
 version: "3.9"
-
 services:
   php:
     build: ./backend
@@ -7,8 +6,10 @@ services:
       - "8001:80"
 
   python:
-    build: ./falcon_framework
+    build:
+      context: ./falcon_framework
     command: ["waitress-serve", "--port=8000", "wsgi:app"]
+
     ports:
       - "8000:8000"
     depends_on:

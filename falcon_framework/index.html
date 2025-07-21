@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>Frontend - Demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Frontend - Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light text-dark">
 
@@ -11,17 +11,19 @@
   <h1 class="mb-4">Frontend - Demo: Endpunkte</h1>
 
   <div class="mb-4">
+    <h5>Endpunkte:</h5>
     <ul class="list-group">
       <li class="list-group-item"><a href="/hello" target="_blank">/hello</a></li>
       <li class="list-group-item"><a href="/howareyou" target="_blank">/howareyou</a></li>
       <li class="list-group-item"><a href="/whattimeisit" target="_blank">/whattimeisit</a></li>
     </ul>
   </div>
+
 <h5>Zeitzone abfragen (GET):</h5>
-<form id="cityForm" method="get" onsubmit="redirectToCity(e)">
+<form id="cityForm" method="get" onsubmit="redirectToCity(event)">
   <div class="row g-3">
     <div class="col-md-6">
-      <input type="text" id="cityInputGet" class="form-control" placeholder="z. B. London, Tokyo" required>
+      <input type="text" id="cityInput" class="form-control" placeholder="z. B. Berlin, Tokyo" required>
     </div>
     <div class="col-md-2">
       <button type="submit" class="btn btn-primary w-100">Abrufen</button>
@@ -36,7 +38,7 @@
     <input type="text" id="cityInputPost" class="form-control" placeholder="z. B. London, Tokyo" required>
   </div>
   <div class="col-md-2">
-    <button type="submit" class="btn btn-success w-100">Senden</button>
+    <button type="submit" class="btn btn-success w-100">POST senden</button>
   </div>
 </form>
 
@@ -45,7 +47,7 @@
 <script>
   function redirectToCity(e) {
     e.preventDefault();
-    const city = document.getElementById("cityInputGet").value.trim();
+    const city = document.getElementById("cityInput").value.trim();
     if (city) {
       window.location.href = "/in/" + encodeURIComponent(city);
     }
@@ -77,11 +79,11 @@
         resultBox.textContent = JSON.stringify(data, null, 2);
         resultBox.className = "mt-3 alert alert-success";
       } else {
-        resultBox.textContent = data.error || "Error";
+        resultBox.textContent = data.error || "Unknown Error";
         resultBox.className = "mt-3 alert alert-danger";
       }
     } catch (err) {
-      resultBox.textContent = "Fehler: " + err.message;
+      resultBox.textContent = "Error: " + err.message;
       resultBox.className = "mt-3 alert alert-danger";
     }
 
