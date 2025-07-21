@@ -30,7 +30,7 @@ docker-compose up --build
 ```
 
 3. **Frontend öffnen:**  
-[http://localhost:8000/index.html](http://localhost:8000/index.html)
+[http://localhost:8000/index.html](http://localhost:8000/index.html) geschützt mit HTTP Basic Auth, Username: admin, Passwort: admin123
 
 4. **Terminal beobachten:**  
     - Python → empfängt `/in`, `/hello`, `/whattimeisit` etc.  

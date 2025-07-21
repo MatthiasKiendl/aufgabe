@@ -27,3 +27,5 @@ services:
       - "8000:8000"
     depends_on:
       - php
+    env_file:
+      - .env
