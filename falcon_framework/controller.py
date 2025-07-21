@@ -27,7 +27,12 @@ class HowAreYou:
 
 class WhatTimeIsIt:
     def on_get(self, req, resp):
-        resp.media = {"n/a": "TODO"}
+        time_zone = find_timezone_ip()
+        if not time_zone:
+            resp.media = {"Error": "Unable to identify timezone"}
+            return
+        php_response = requests.get(standard_url + "whattimeisit", params={"timezone": time_zone})
+        resp.media = php_response.json()
 
 # Get und Post mit /in
 class InByCityGet:
